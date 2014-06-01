@@ -1,0 +1,10 @@
+*.c~
+*.cpp~
+*.h~
+*.swp
+*.swo
+*.o
+*.a
+makefile~
+Makefile~
+
