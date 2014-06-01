@@ -5,6 +5,7 @@
 *.swo
 *.o
 *.a
+*.orig
 makefile~
 Makefile~
 
