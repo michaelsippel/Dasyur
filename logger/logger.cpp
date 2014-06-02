@@ -29,9 +29,6 @@
 #include "list.h"
 #include "logger.h"
 
-namespace oxygarum
-{
-
 Logger::Logger()
 {
     this->log_data = new List<LogData>();
@@ -154,6 +151,4 @@ char *LogData::getPrefixString(void)
 {
     return (char*) &this->parent->prefix_str;
 }
-
-};
 
