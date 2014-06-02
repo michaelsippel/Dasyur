@@ -39,11 +39,13 @@ class List
         ~List();
 
         ListEntry<T> *add(T *element);
+        ListEntry<T> *add(T *element, const char *name);
         ListEntry<T> *add(T *element, char *name);
         void add(ListEntry<T> *entry);
         void remove(ListEntry<T> *entry);
         void join(List<T> *list);
 
+        ListEntry<T> *getEntry(const char *name);
         ListEntry<T> *getEntry(char *name);
         ListEntry<T> *getHead();
         ListEntry<T> *getCurrent();

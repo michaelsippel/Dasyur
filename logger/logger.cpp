@@ -39,12 +39,30 @@ Logger::Logger()
     this->parent = NULL;
 }
 
+Logger::Logger(const char *prefix_)
+{
+    this->generate_prefix_str((char*)prefix_);
+    this->log_data = new List<LogData>();
+    this->sub_loggers = new List<Logger>();
+    this->parent = NULL;
+}
+
 Logger::Logger(char *prefix_)
 {
     this->generate_prefix_str(prefix_);
     this->log_data = new List<LogData>();
     this->sub_loggers = new List<Logger>();
     this->parent = NULL;
+}
+
+Logger::Logger(Logger *parent_, const char *prefix_)
+{
+    parent_->sub_loggers->add(parent_);
+    this->parent = parent_;
+
+    this->generate_prefix_str((char*)prefix_);
+    this->log_data = new List<LogData>();
+    this->sub_loggers = new List<Logger>();
 }
 
 Logger::Logger(Logger *parent_, char *prefix_)
@@ -94,7 +112,7 @@ LogData::LogData()
 {
 }
 
-LogData::LogData(enum log_type type_, const char *text_)
+LogData::LogData(enum log_type type_, char *text_)
     : type(type_)
 {
     strcpy(this->text, text_);
@@ -102,7 +120,7 @@ LogData::LogData(enum log_type type_, const char *text_)
     time(&this->log_time);
 }
 
-LogData::LogData(Logger *parent_, enum log_type type_, const char *text_)
+LogData::LogData(Logger *parent_, enum log_type type_, char *text_)
     : parent(parent_), type(type_)
 {
     strcpy(this->text, text_);

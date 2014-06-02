@@ -68,6 +68,12 @@ ListEntry<T> *List<T>::add(T *element)
 }
 
 template <typename T>
+ListEntry<T> *List<T>::add(T *element, const char *name)
+{
+    return this->add(element, (char*) name);
+}
+
+template <typename T>
 ListEntry<T> *List<T>::add(T *element, char *name)
 {
     ListEntry<T> *entry = new ListEntry<T>(element, name);
@@ -121,6 +127,12 @@ void List<T>::join(List<T> *list)
             }
         }
     }
+}
+
+template <typename T>
+ListEntry<T> *List<T>::getEntry(const char *name_)
+{
+    return this->getEntry((char*) name_);
 }
 
 template <typename T>

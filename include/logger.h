@@ -48,8 +48,8 @@ class LogData
 
     public:
         LogData();
-        LogData(enum log_type type_, const char *text_);
-        LogData(Logger *parent_, enum log_type type_, const char *text_);
+        LogData(enum log_type type_, char *text_);
+        LogData(Logger *parent_, enum log_type type_, char *text_);
         ~LogData();
 
         char *getTypeString(void);
@@ -67,7 +67,9 @@ class Logger
 {
     public:
         Logger();
+        Logger(const char *prefix_);
         Logger(char *prefix_);
+        Logger(Logger *parent_, const char *prefix_);
         Logger(Logger *parent_, char *prefix_);
         ~Logger();
 
