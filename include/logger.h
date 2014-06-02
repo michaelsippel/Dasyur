@@ -30,9 +30,6 @@
 #include <time.h>
 #include "list.h"
 
-namespace oxygarum
-{
-
 class Logger;
 
 enum log_type
@@ -82,8 +79,6 @@ class Logger
 
         void generate_prefix_str(char *prefix_);
         void log(enum log_type type, const char *text, ...);
-};
-
 };
 
 #endif
