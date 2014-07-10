@@ -25,14 +25,32 @@
 
 #include "list.h"
 
+class XMLParam
+{
+    public:
+        XMLParam();
+
+        XMLParam(const char *name, const char *value);
+        XMLParam(const char *name, char *value);
+        XMLParam(char *name, const char *value);
+        XMLParam(char *name, char *value);
+
+        ~XMLParam();
+
+        char *name;
+        char *value;
+};
+
 class XMLNode
 {
     public:
         XMLNode();
         ~XMLNode();
 
-        char name[256];
+        char *name;
+        char *text;
 
+        List<XMLParam> *params;
         List<XMLNode> *subnodes;
         XMLNode *parent;
 };
