@@ -87,7 +87,7 @@ char *XMLNode::parse(char *str)
 #define STATUS_PARAM_VALUE 3
 #define STATUS_TAG_END 4
 
-    int i = 0;
+    int m = 0, n = 0;
     int j = 0;
     char *start = str;
     int end = strlen(str);
@@ -122,48 +122,50 @@ char *XMLNode::parse(char *str)
             case '>':
                 if(status == STATUS_TAG_END)
                 {
-                    compare_name[i] == '\0';
-                    i = 0;
+                    compare_name[n] = '\0';
+                    n = 0;
+                    str++;
 
                     if(this->name != NULL)
                     {
                         if(strcmp(compare_name, this->name) == 0)
                         {
-                            //						printf("return from %s\n", this->name);
-                            return ++str;
+                            //printf("</%s>", this->name);
+                            return str;
+                        }
+                        else
+                        {
+                            //printf("</CLOSE: %s, expected %s>", compare_name, this->name);
                         }
                     }
+                    status = STATUS_TEXT;
                 }
                 else if(status != STATUS_TEXT && subnode != NULL)
                 {
-                    subnode->name[i] = '\0';
-                    //				printf("enter subnode %s\n", subnode->name);
+                    subnode->name[m] = '\0';
+                    m = 0;
+                    //printf("<%s>", subnode->name);
 
                     str = subnode->parse(++str);
                     this->subnodes->add(subnode, subnode->name);
-                    //				printf("added %s\n", subnode->name);
 
                     subnode = NULL;
-                    i = 0;
                     status = STATUS_TEXT;
-                }
-                else
-                {
-                    status = STATUS_TEXT;
+                    continue;
                 }
                 break;
         }
 
         if(status == STATUS_TEXT)
         {
-            //		printf("copy %c\n", *str);
+            //printf("%c", *str);
             this->text[j++] = *str++;
         }
         else if(status == STATUS_TAG_NAME)
         {
             if(subnode != NULL)
             {
-                subnode->name[i++] = *str++;
+                subnode->name[m++] = *str++;
             }
             else
             {
@@ -172,7 +174,7 @@ char *XMLNode::parse(char *str)
         }
         else if(status == STATUS_TAG_END)
         {
-            compare_name[i++] = *str++;
+            compare_name[n++] = *str++;
         }
     }
 
