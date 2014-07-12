@@ -104,6 +104,95 @@ void List<T>::join(List<T> *list)
         }
     }
 }
+template <typename T>
+ListEntry<T> *List<T>::add(T *element)
+{
+    ListEntry<T> *entry = new ListEntry<T>(element);
+    this->add(entry);
+
+    return entry;
+}
+
+template <typename T>
+ListEntry<T> *List<T>::add(T *element, const char *name)
+{
+    return this->add(element, (char*) name);
+}
+
+template <typename T>
+ListEntry<T> *List<T>::add(T *element, char *name)
+{
+    ListEntry<T> *entry = new ListEntry<T>(element, name);
+    this->add(entry);
+
+    return entry;
+}
+
+template <typename T>
+ListEntry<T> *List<T>::getEntry(const char *name_)
+{
+    return this->getEntry((char*) name_);
+}
+
+template <typename T>
+ListEntry<T> *List<T>::getEntry(char *name_)
+{
+    if(name_ == NULL)
+    {
+        return NULL;
+    }
+
+    ListEntry<T> *entry = this->head;
+    while(entry != NULL)
+    {
+        if(strcmp(entry->name, name_) == 0)
+        {
+            return entry;
+        }
+        entry = entry->next;
+    }
+
+    return NULL;
+}
+
+template <typename T>
+T *List<T>::getElement(const char *name_)
+{
+    return this->getElement((char*) name_);
+}
+
+template <typename T>
+T *List<T>::getElement(char *name_)
+{
+    if(name_ == NULL)
+    {
+        return NULL;
+    }
+
+    ListEntry<T> *entry = this->head;
+    while(entry != NULL)
+    {
+        if(strcmp(entry->name, name_) == 0)
+        {
+            return entry->element;
+        }
+        entry = entry->next;
+    }
+
+    return NULL;
+}
+
+template <typename T>
+ListEntry<T> *List<T>::getHead(void)
+{
+    return this->head;
+}
+
+template <typename T>
+ListEntry<T> *List<T>::getCurrent(void)
+{
+    return this->current;
+}
 
 template <typename T>
 int List<T>::getSize(void)

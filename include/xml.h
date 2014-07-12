@@ -57,7 +57,6 @@ class XMLNode
         XMLNode *parent;
 
         char *parse(char *str);
-        char *parse(char *str, int end);
 };
 
 #endif
