@@ -84,6 +84,7 @@ class ListEntry
 };
 
 #include "../list/list_impl.h"
+#include "../list/list_entry_impl.h"
 
 #endif
 
