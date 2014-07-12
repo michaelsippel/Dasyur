@@ -1,5 +1,5 @@
 /**
- *  xml/xml.cpp
+ *  xml/node.cpp
  *
  *  (C) Copyright 2014 Michael Sippel
  *
@@ -21,40 +21,6 @@
  * @author Michael Sippel <michamimosa@gmail.com>
  */
 #include "xml.h"
-
-XMLParam::XMLParam()
-{
-    this->name = NULL;
-    this->value = NULL;
-}
-
-XMLParam::XMLParam(const char *name_, const char *value_)
-{
-    this->name = (char*) name_;
-    this->value = (char*) value_;
-}
-
-XMLParam::XMLParam(const char *name_, char *value_)
-    : value(value_)
-{
-    this->name = (char*) name_;
-}
-
-XMLParam::XMLParam(char *name_, const char *value_)
-    : name(name_)
-{
-    this->value = (char*) value_;
-}
-
-XMLParam::XMLParam(char *name_, char *value_)
-    : name(name_), value(value_)
-{
-}
-
-XMLParam::~XMLParam()
-{
-}
-
 
 XMLNode::XMLNode()
 {
