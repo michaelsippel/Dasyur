@@ -45,6 +45,8 @@ class XMLNode
 {
     public:
         XMLNode();
+        XMLNode(char *text_);
+        XMLNode(const char *path);
         ~XMLNode();
 
         char *name;
@@ -53,6 +55,9 @@ class XMLNode
         List<XMLParam> *params;
         List<XMLNode> *subnodes;
         XMLNode *parent;
+
+        char *parse(char *str);
+        char *parse(char *str, int end);
 };
 
 #endif
