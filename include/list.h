@@ -75,7 +75,7 @@ class ListEntry
         ~ListEntry();
 
         T *element;
-        char name[256];
+        char *name;
 
         ListEntry<T> *getPrev(void);
         ListEntry<T> *getNext(void);
