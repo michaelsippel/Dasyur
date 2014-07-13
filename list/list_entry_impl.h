@@ -30,7 +30,7 @@ template <typename T>
 ListEntry<T>::ListEntry()
 {
     this->element = NULL;
-    strcpy(this->name, "");
+    this->name = NULL;
     this->prev = NULL;
     this->next = NULL;
 }
@@ -39,7 +39,7 @@ template <typename T>
 ListEntry<T>::ListEntry(T *element_)
     : element(element_)
 {
-    strcpy(this->name, "");
+    this->name = NULL;
     this->prev = NULL;
     this->next = NULL;
 }
@@ -50,11 +50,12 @@ ListEntry<T>::ListEntry(T *element_, char *name_)
 {
     if(name_ != NULL)
     {
+        this->name = (char*) malloc(strlen(name_) + 1);
         strcpy(this->name, name_);
     }
     else
     {
-        strcpy(this->name, "");
+        this->name = NULL;
     }
     this->prev = NULL;
     this->next = NULL;
