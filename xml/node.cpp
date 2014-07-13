@@ -45,6 +45,16 @@ XMLNode::~XMLNode()
 {
 }
 
+XMLNode *XMLNode::getSubnode(const char *name_)
+{
+    return this->getSubnode((char*) name_);
+}
+
+XMLNode *XMLNode::getSubnode(char *name_)
+{
+    return this->subnodes->getElement(name_);
+}
+
 char *XMLNode::parse(char *str)
 {
 #define STATUS_TEXT 0

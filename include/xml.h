@@ -56,6 +56,8 @@ class XMLNode
         List<XMLNode> *subnodes;
         XMLNode *parent;
 
+        XMLNode *getSubnode(const char *name_);
+        XMLNode *getSubnode(char *name_);
         char *parse(char *str);
 };
 

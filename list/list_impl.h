@@ -164,19 +164,11 @@ T *List<T>::getElement(const char *name_)
 template <typename T>
 T *List<T>::getElement(char *name_)
 {
-    if(name_ == NULL)
-    {
-        return NULL;
-    }
+    ListEntry<T> *entry = this->getEntry(name_);
 
-    ListEntry<T> *entry = this->head;
-    while(entry != NULL)
+    if(entry != NULL)
     {
-        if(strcmp(entry->name, name_) == 0)
-        {
-            return entry->element;
-        }
-        entry = entry->next;
+        return entry->element;
     }
 
     return NULL;
