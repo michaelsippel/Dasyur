@@ -21,6 +21,7 @@
  * @author Michael Sippel <michamimosa@gmail.com>
  */
 #include "xml.h"
+#include <stdio.h>
 
 XMLNode::XMLNode()
 {
@@ -39,6 +40,35 @@ XMLNode::XMLNode(char *text_)
     this->subnodes = new List<XMLNode>();
     this->parent = NULL;
     this->parse(text_);
+}
+
+XMLNode::XMLNode(const char *path)
+{
+    this->name = NULL;
+    this->text = NULL;
+    this->params = new List<XMLParam>();
+    this->subnodes = new List<XMLNode>();
+    this->parent = NULL;
+
+    FILE *f = fopen(path, "r");
+    if(f == NULL)
+    {
+        printf("couldn't open %s\n", path);
+        return;
+    }
+
+    fseek(f, 0, SEEK_END);
+    int len = ftell(f);
+
+    fseek(f, 0, SEEK_SET);
+
+    char *buf = (char*) malloc(len + 1);
+    fread(buf, len, 1, f);
+    buf[len] = '\0';
+
+    this->parse(buf);
+
+    fclose(f);
 }
 
 XMLNode::~XMLNode()
