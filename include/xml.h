@@ -58,6 +58,11 @@ class XMLNode
 
         XMLNode *getSubnode(const char *name_);
         XMLNode *getSubnode(char *name_);
+        XMLNode *getSubnode(const char *name_, const char *value_);
+        XMLNode *getSubnode(const char *name_, char *value_);
+        XMLParam *getParam(const char *name_);
+        XMLParam *getParam(char *name_);
+
         char *parse(char *str);
 };
 

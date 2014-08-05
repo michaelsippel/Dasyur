@@ -85,6 +85,39 @@ XMLNode *XMLNode::getSubnode(char *name_)
     return this->subnodes->getElement(name_);
 }
 
+XMLNode *XMLNode::getSubnode(const char *name_, const char *value_)
+{
+    return this->getSubnode((char*) name_, (char*) value_);
+}
+
+XMLNode *XMLNode::getSubnode(const char *name_, char *value_)
+{
+    ListEntry<XMLNode> *entry = this->subnodes->getHead();
+    while(entry != NULL)
+    {
+        XMLNode *node = entry->element;
+        if(node != NULL)
+        {
+            char *value = node->params->getElement(name_)->value;
+            if(strcmp(value_, value) == 0)
+            {
+                return node;
+            }
+        }
+        entry = entry->getNext();
+    }
+}
+
+XMLParam *XMLNode::getParam(const char *name_)
+{
+    return this->getParam((char*) name_);
+}
+
+XMLParam *XMLNode::getParam(char *name_)
+{
+    return this->params->getElement(name_);
+}
+
 char *XMLNode::parse(char *str)
 {
 #define STATUS_TEXT 0
@@ -199,7 +232,7 @@ char *XMLNode::parse(char *str)
                 {
                     param->value[n] = '\0';
                     n = 0;
-                    subnode->params->add(param);
+                    subnode->params->add(param, param->name);
 
                     status = STATUS_TAG_SPACE;
                     str++;
