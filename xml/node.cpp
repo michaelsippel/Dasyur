@@ -89,9 +89,10 @@ char *XMLNode::parse(char *str)
 {
 #define STATUS_TEXT 0
 #define STATUS_TAG_NAME 1
-#define STATUS_PARAM_NAME 2
-#define STATUS_PARAM_VALUE 3
-#define STATUS_TAG_END 4
+#define STATUS_TAG_SPACE 2
+#define STATUS_PARAM_NAME 3
+#define STATUS_PARAM_VALUE 4
+#define STATUS_TAG_END 5
 
     int m = 0, n = 0;
     int j = 0;
@@ -103,6 +104,8 @@ char *XMLNode::parse(char *str)
 
     XMLNode *subnode = NULL;
     char compare_name[256]; // TODO: dynamic
+
+    XMLParam *param = NULL;
 
     while(*str != '\0')
     {
@@ -160,27 +163,81 @@ char *XMLNode::parse(char *str)
                     continue;
                 }
                 break;
+            case ' ':
+                if(status == STATUS_TAG_NAME || status == STATUS_TAG_SPACE)
+                {
+                    str++;
+                    if(*str != ' ')
+                    {
+                        status = STATUS_PARAM_NAME;
+                        param = new XMLParam();
+                        param->name = (char*) malloc(256); // TODO: DYNAMIC!!!
+                        param->value = (char*) malloc(256); //  TODO: DYNAMICCC!!!!!!!!
+                    }
+                    else
+                    {
+                        status = STATUS_TAG_SPACE;
+                    }
+                }
+                break;
+            case '=':
+                if(status == STATUS_PARAM_NAME)
+                {
+                    str++;
+                    if(*str == '\"')
+                    {
+                        param->name[n] = '\0';
+                        n = 0;
+
+                        str++;
+                        status = STATUS_PARAM_VALUE;
+                    }
+                }
+                break;
+            case '\"':
+                if(status == STATUS_PARAM_VALUE)
+                {
+                    param->value[n] = '\0';
+                    n = 0;
+                    subnode->params->add(param);
+
+                    status = STATUS_TAG_SPACE;
+                    str++;
+                }
+                break;
         }
 
-        if(status == STATUS_TEXT)
+        switch(status)
         {
-            //printf("%c", *str);
-            this->text[j++] = *str++;
-        }
-        else if(status == STATUS_TAG_NAME)
-        {
-            if(subnode != NULL)
-            {
-                subnode->name[m++] = *str++;
-            }
-            else
-            {
-                printf("something went wrong.\n");
-            }
-        }
-        else if(status == STATUS_TAG_END)
-        {
-            compare_name[n++] = *str++;
+            case STATUS_TEXT:
+                //printf("%c", *str);
+                this->text[j++] = *str++;
+                break;
+            case STATUS_TAG_NAME:
+                if(subnode != NULL)
+                {
+                    subnode->name[m++] = *str++;
+                }
+                else
+                {
+                    printf("something went wrong.\n");
+                }
+                break;
+            case STATUS_PARAM_NAME:
+                if(param != NULL)
+                {
+                    param->name[n++] = *str++;
+                }
+                break;
+            case STATUS_PARAM_VALUE:
+                if(param != NULL)
+                {
+                    param->value[n++] = *str++;
+                }
+                break;
+            case STATUS_TAG_END:
+                compare_name[n++] = *str++;
+                break;
         }
     }
 
