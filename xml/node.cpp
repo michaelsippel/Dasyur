@@ -172,6 +172,7 @@ char *XMLNode::parse(char *str)
                     {
                         if(strcmp(compare_name, this->name) == 0)
                         {
+							this->text[j] = '\0';
                             //printf("</%s>", this->name);
                             return str;
                         }
