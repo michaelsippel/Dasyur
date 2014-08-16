@@ -102,6 +102,7 @@ void List<T>::join(List<T> *list)
                 list->head->prev = this->current;
             }
         }
+        this->size += list->size;
     }
 }
 template <typename T>
