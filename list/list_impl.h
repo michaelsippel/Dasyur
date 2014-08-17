@@ -42,11 +42,6 @@ List<T>::~List()
 template <typename T>
 void List<T>::add(ListEntry<T> *entry)
 {
-    if(entry->name != NULL)
-    {
-        printf("add %s\n", entry->name);
-    }
-
     entry->next = NULL;
     entry->prev = this->current;
 
