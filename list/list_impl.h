@@ -42,6 +42,11 @@ List<T>::~List()
 template <typename T>
 void List<T>::add(ListEntry<T> *entry)
 {
+    if(entry->name != NULL)
+    {
+        printf("add %s\n", entry->name);
+    }
+
     entry->next = NULL;
     entry->prev = this->current;
 
@@ -88,20 +93,13 @@ void List<T>::join(List<T> *list)
         if(this->head == NULL)
         {
             this->head = list->head;
-            this->current = list->current;
         }
         else
         {
-            if(this->current != NULL)
-            {
-                this->current->next = list->head;
-            }
-
-            if(list->head != NULL)
-            {
-                list->head->prev = this->current;
-            }
+            this->current->next = list->head;
+            list->head->prev = this->current;
         }
+        this->current = list->current;
         this->size += list->size;
     }
 }
