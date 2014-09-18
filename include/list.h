@@ -49,6 +49,7 @@ class List
         ListEntry<T> *getEntry(char *name);
         T *getElement(const char *name_);
         T *getElement(char *name_);
+		ListEntry<T> *isContained(T *e);
         ListEntry<T> *getHead();
         ListEntry<T> *getCurrent();
         int getSize(void);

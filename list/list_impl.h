@@ -169,6 +169,22 @@ T *List<T>::getElement(char *name_)
 }
 
 template <typename T>
+ListEntry<T> *List<T>::isContained(T *e)
+{
+    ListEntry<T> *entry = this->head;
+    while(entry != NULL)
+    {
+        if(entry->element == e)
+        {
+            return entry;
+        }
+        entry = entry->next;
+    }
+
+    return NULL;
+}
+
+template <typename T>
 ListEntry<T> *List<T>::getHead(void)
 {
     return this->head;
